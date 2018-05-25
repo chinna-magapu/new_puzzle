@@ -1,12 +1,98 @@
-<div>
-    Hello world!
-</div>
-
-<ul>
-    <li class="options-box" *ngFor="let item of options; let i = index" [attr.data-index]="i">
-        <div class="box-wrapper">
-            <div class='box-up box' myDropTarget (myDrop)="onDrop($event,5)"  [myDraggable]="{data: item}" class="drop-target">{{ i+1 }}</div>
-            <div class='box-down box' myDropTarget [myDraggable]="{data: item}" (myDrop)="onDrop($event,5)"  class="draggable">{{ item }}</div>
+<header>
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-9">
+                <h3>Title of the activity</h3>
+            </div>
+            <div class="col-3 text-right">
+                <i class="fa fa-2x fa-question-circle"></i>
+                <i class="fa fa-2x ml-1 fa-times-circle"></i>
+            </div>
         </div>
-    </li>
-</ul>
+    </div>
+</header>
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!--<ul>-->
+                    <!--<li class="options-box" *ngFor="let item of curShuffledOptions; let i = index" [attr.data-index]="i">-->
+                        <!--<div class="box-wrapper">-->
+                            <!--<div class='box-up box' myDropTarget (myDrop)="onDrop($event,i)"  [myDraggable]="{data: item}" class="drop-target">-->
+                                <!--<div *ngIf="curSelectedOptions.length && curSelectedOptions[i]; then content else other_content">here is ignored</div>-->
+                                <!--<ng-template #content> {{ curSelectedOptions[i] }}</ng-template>-->
+                                <!--<ng-template #other_content> {{ i+1 }} </ng-template>-->
+                            <!--</div>-->
+                            <!--<div class='box-down box' myDropTarget [myDraggable]="{data: item}" (myDrop)="onDrop($event,i)"  class="draggable">{{ item }}</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <p>Read each word. Drag the words into alphabetical order.</p>
+            </div>
+            <div class="col-12">
+                <textarea readonly="readonly" rows="3" class="form-control">
+                    {{ curQuestionData.question_text }}
+                </textarea>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row mt-3">
+                    <div class="col" *ngFor="let item of curShuffledOptions; let i = index" [attr.data-index]="i">
+                        <div class="card drop-card" id="drop{{i}}" myDropTarget (myDrop)="onDrop($event,i)" [myDraggable]="{data: item}">
+                            <div  *ngIf="curSelectedOptions.length && curSelectedOptions[i]; then content else other_content">here is ignored</div>
+                            <ng-template #content> <p>{{ curSelectedOptions[i] }}</p></ng-template>
+                            <ng-template #other_content><p> {{ i+1 }} </p></ng-template>
+
+                        </div>
+
+                        <!--<div class='box-down box' myDropTarget [myDraggable]="{data: item}" (myDrop)="onDrop($event,i)"  class="draggable">{{ item }}</div>-->
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col" *ngFor="let item of curShuffledOptions; let i = index" [attr.data-index]="i">
+                        <div class="card drag-card" id="drag{{i}}" myDropTarget [myDraggable]="{data: item}" (myDrop)="onDrop($event,i)">
+                            <p>{{ item }}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <button *ngIf="curSelectedOptions.every(checkEmpty)" (click)="checkAnswer()" class="btn btn-primary pull-right"> check </button>
+                <button *ngIf="!curSelectedOptions.every(checkEmpty)" disabled="true" class="btn btn-disabled pull-right"> check </button>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<footer>
+    <div class="container-fluid">
+        <div class="row  align-items-center">
+            <div class="col-2 text-center previous-step">
+                <button class="btn btn-link btn-block">
+                    Previous
+                </button>
+            </div>
+            <div class="col-8">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div class="col-2 text-center next-step">
+                <button class="btn btn-link btn-block">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</footer>
