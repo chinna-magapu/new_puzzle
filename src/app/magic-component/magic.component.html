@@ -1,0 +1,12 @@
+<div>
+    Hello world!
+</div>
+
+<ul>
+    <li class="options-box" *ngFor="let item of options; let i = index" [attr.data-index]="i">
+        <div class="box-wrapper">
+            <div class='box-up box' myDropTarget (myDrop)="onDrop($event,5)"  [myDraggable]="{data: item}" class="drop-target">{{ i+1 }}</div>
+            <div class='box-down box' myDropTarget [myDraggable]="{data: item}" (myDrop)="onDrop($event,5)"  class="draggable">{{ item }}</div>
+        </div>
+    </li>
+</ul>
